@@ -52,7 +52,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="d70f5da9f2a7aaa3befcf89016bc158fcf04f7b0">
+        sha1="6b6dd6c294f78cf63a87b6158c5e1e7fc9e3fa89">
         <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\wear\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_4c321ffcd17c529c8e0f4e269b3712950b199fda\classes.dex" />
     </item>
     <item
@@ -138,6 +138,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\exploded-aar\com.android.support\design\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="26384be22ddc74cfe197ebda9edbc7d1fd8bd537">
+        <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.0.0_de11741a3dd6168a14c052423e1c406aa42eb81d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\jars\libs\internal_impl-25.0.0.jar"
         jumboMode="true"
         optimize="true"
@@ -162,6 +171,24 @@
         revision="25.0.0"
         sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
         <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\wear\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.0.0_31b7594dec0181079e8fbf7306b9cfb01cdffe9e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5e497d60f0cb6ce87c458ac5420a46d0fed49bd0">
+        <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.0.0_934cd48acdb399c0eda81ee49078272734d1c030\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Davide\.gradle\caches\modules-2\files-2.1\cz.msebera.android\httpclient\4.3.6\526a9f794eab830eae4f23a62c572878b3f491ab\httpclient-4.3.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="526a9f794eab830eae4f23a62c572878b3f491ab">
+        <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\transforms\dex\debug\folders\1000\10\httpclient-4.3.6_86d305e59cf599bf890bb35d4b1a433b3ad549c0\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -322,7 +349,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="17261a16a2a89d96deeb2355f00d0fb3866e9fd5">
+        sha1="f77d4569eb221f2368e2e6cdbd4c3440cac50179">
         <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_3bb1c9432a8d57e691b46b4a36edc3e4e79620a3\classes.dex" />
     </item>
     <item
@@ -372,6 +399,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\exploded-aar\com.android.support\transition\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0c6d948e6cb9ea6f535d175fb61ba2930719c0e9">
+        <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.0.0_f0725053dbb0527bb4946a0e5c4ef4ca4c6995fc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\7.8.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -385,8 +421,17 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="2601223d34ac47bc99c82ddb667b8ce35db26282">
+        sha1="f10cb1f6dd708394a2bc65905f2b21a09b1b5c69">
         <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_752717cfd990bda07e6659e25f4134ddeea79df7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Davide\.gradle\caches\modules-2\files-2.1\com.loopj.android\android-async-http\1.4.9\386a4339ffe52d5d63e80f9bed8d2b1d1a418249\android-async-http-1.4.9.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="386a4339ffe52d5d63e80f9bed8d2b1d1a418249">
+        <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\transforms\dex\debug\folders\1000\10\android-async-http-1.4.9_d835fc353ac69545ee921f9505752a6c9538a971\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -422,7 +467,7 @@
         optimize="true"
         revision="25.0.0"
         sha1="a22d2cc94da87b254451fa8ed28afc30b4653773">
-        <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\wear\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.0.0_80c026b9ca611f9071d1c18d6b286f445916c1d1\classes.dex" />
+        <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.0.0_80c026b9ca611f9071d1c18d6b286f445916c1d1\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -520,7 +565,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="b861e8c7e5f083f0885151fe1ee829b23e5d97e1">
+        sha1="c05014acfd434a7e6a2611faab326e4dca0e7d4e">
         <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\wear\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_5e87a8d0f9bec2d4ccba0d6682a242974af2edc6\classes.dex" />
     </item>
     <item
@@ -549,6 +594,15 @@
         revision="25.0.0"
         sha1="26674000177e45447a0326a6ad84612761199a13">
         <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\wear\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.0.0_79fd7df0d4da878ab16ac040b422430c915f1a45\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Davide\.gradle\caches\modules-2\files-2.1\de.greenrobot\eventbus\2.4.0\ddd166d01b3158d1c00576d29f7ed15c030df719\eventbus-2.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ddd166d01b3158d1c00576d29f7ed15c030df719">
+        <dex dex="C:\Users\Davide\Project\WTT16HACK\WTT16hack\mobile\build\intermediates\transforms\dex\debug\folders\1000\10\eventbus-2.4.0_e17d732fac159a29229ecf44f833e355621b464d\classes.dex" />
     </item>
     <item
         is-multidex="true"

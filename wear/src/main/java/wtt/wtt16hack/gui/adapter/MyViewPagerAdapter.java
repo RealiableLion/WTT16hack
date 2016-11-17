@@ -3,12 +3,11 @@ package wtt.wtt16hack.gui.adapter;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import wtt.wtt16hack.gui.frag.CustomFragment;
+import wtt.wtt16hack.gui.fragment.CustomFragment;
 
 /**
  * Created by Davide on 12/11/2016.

@@ -1,9 +1,18 @@
 package wtt.wtt16hack;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import de.greenrobot.event.EventBus;
 import watch.nudge.phonegesturelibrary.AbstractPhoneGestureActivity;
 
 
@@ -22,18 +31,39 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 
+import com.google.android.gms.wearable.MessageEvent;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
 import static java.lang.Math.round;
 
 
 public class MainActivity extends AbstractPhoneGestureActivity {
-    private LocationListener locationListener=null;
+    private LocationListener locationListener = null;
 
-    private static String PhoneNumber = "+393924953670";
+    public JsonManager containerDati;
+
+    private Button button;
+
+    private static String PhoneNumber = "+393451760653";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+         onClickSalva();
+
+        containerDati = new JsonManager(getApplicationContext());
+        if (containerDati.isUserRegistered()) {
+            setContentView(R.layout.activity_main2);
+            TextView nomeLabel = (TextView) findViewById(R.id.nome2);
+            nomeLabel.setText(containerDati.readField("name"));
+        } else {
+            setContentView(R.layout.activity_main);
+        }
+        //EventBus.getDefault().register(this);
 
         //phone
         PhoneCallListener phoneCallListener = new PhoneCallListener();
@@ -51,6 +81,8 @@ public class MainActivity extends AbstractPhoneGestureActivity {
     @Override
     public void onFlick() {
         Toast.makeText(this,"Flick that thang and... TEXT!",Toast.LENGTH_LONG).show();
+
+        sendToServer("Emergenza");
 
         //location
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -73,7 +105,7 @@ public class MainActivity extends AbstractPhoneGestureActivity {
             }
         }
 
-        String smsText = "172.29.121.113/wtt/prova.php";
+        String smsText = "192.168.43.158/wtt/sos.php?id=" + containerDati.readField("name");
         //sms
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(PhoneNumber, null, smsText, null, null);
@@ -81,10 +113,14 @@ public class MainActivity extends AbstractPhoneGestureActivity {
 
     @Override
     public void onTwist() {
+        sendSMS();
+        sendToServer("Emergenza");
+
         Toast.makeText(this,"Twistin' the night away and... CALL",Toast.LENGTH_LONG).show();
         Intent phoneCallIntent = new Intent(Intent.ACTION_CALL);
         phoneCallIntent.setData(Uri.parse("tel:" + PhoneNumber));
         startActivity(phoneCallIntent);
+
     }
 
     // monitor phone call states
@@ -150,5 +186,149 @@ public class MainActivity extends AbstractPhoneGestureActivity {
     @Override
     public void onWindowClosed() {
         Log.e("MainActivity", "This function should not be called unless windowed gesture detection is enabled.");
+    }
+
+    //Restituisce un vettore di due valori double il primo e latitudine e il secondo longitudine
+    public double[] coordinateGPS() {
+
+        //location
+        double loc[] = new double[2];
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new MyLocationListener();
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Richiesta permessi", Toast.LENGTH_SHORT).show();
+        }
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+
+        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        Location location;
+
+        if (isGPSEnabled) {
+            if (locationManager != null) {
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if (location != null) {
+                    loc[0] = round(location.getLatitude() * 10000) / 10000.0;
+                    loc[1] = round(location.getLongitude() * 10000) / 10000.0;
+                }
+            }
+        }
+        //Toast.makeText(this, "Help me at (" + String.valueOf(loc[0]) + ", " + String.valueOf(loc[1]) + ")", Toast.LENGTH_SHORT).show();
+
+        return loc;
+    }
+    //onClick listener del pulsante Salva per salvare dati relativi all'utente
+    public void onClickSalva()  {
+        Log.d("ENTRATO", "ENTRATO");
+
+//        EditText nome = (EditText) findViewById(R.id.nome);
+//        EditText cognome = (EditText) findViewById(R.id.cognome);
+//        EditText sangue = (EditText) findViewById(R.id.sangue);
+//        EditText eta = (EditText) findViewById(R.id.eta);
+//        EditText peso = (EditText) findViewById(R.id.peso);
+//        EditText sesso = (EditText) findViewById(R.id.sesso);
+
+        String nome = "Mario";
+        String cognome = "Rossi";
+        String sangue = "A+";
+        String eta = "58";
+        String peso = "77";
+        String sesso = "M";
+
+        JsonManager containerDati = new JsonManager(getApplicationContext());
+        containerDati.registerUser(nome, cognome, sangue, Integer.parseInt(eta), sesso, Integer.parseInt(peso));
+
+        setContentView(R.layout.activity_main2);
+        TextView nomeLabel = (TextView) findViewById(R.id.nome2);
+        nomeLabel.setText(containerDati.readField("name"));
+        Log.d("ENTRATO", "ENTRATO");
+
+    }
+
+    public void onClickChangeActivity(View view) {
+        setContentView(R.layout.activity_main);
+
+    }
+
+
+    public void sendToServer(String string) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        double[] coord = coordinateGPS();
+        string="Tipo di segnalazione: "+string;
+
+        try {
+            StringEntity entity = new StringEntity(containerDati.getJSONStringToSend(coord[0],coord[1],string,"+393924953670"));
+            client.post(getApplicationContext(), "http://192.168.43.158/wtt/server.php", entity, "application/json", new AsyncHttpResponseHandler() {
+
+                @Override
+                public void onSuccess(int a, Header[] b, final byte[] d) {
+                    Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+
+                }
+
+
+                @Override
+                public void onFailure(int a, Header[] b, byte[] d, Throwable e) {
+                    Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
+                }
+
+
+                @Override
+                public void onFinish() {
+                    Toast.makeText(getApplicationContext(), "Finish", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+
+        }
+
+    }
+
+
+
+
+
+    public void onClickTestServer(View view) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        double[] coord = coordinateGPS();
+
+        try {
+            StringEntity entity = new StringEntity(containerDati.getJSONStringToSend(coord[0],coord[1],"+393924953670"));
+            client.post(getApplicationContext(), "http://192.168.43.158/wtt/server.php", entity, "application/json", new AsyncHttpResponseHandler() {
+
+                @Override
+                public void onSuccess(int a, Header[] b, final byte[] d) {
+                    Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+
+                }
+
+
+                @Override
+                public void onFailure(int a, Header[] b, byte[] d, Throwable e) {
+                    Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
+                }
+
+
+                @Override
+                public void onFinish() {
+                    Toast.makeText(getApplicationContext(), "Finish", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+
+        }
+
+    }
+
+//    public void onEvent(String message){
+//        sendToServer(message);
+//    }
+
+    public void sendSMS(){
+        String smsText = "Help me! Open: http://192.168.43.158/wtt/sos.php?id=" + containerDati.readField("name");
+        //sms
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(PhoneNumber, null, smsText, null, null);
     }
 }
